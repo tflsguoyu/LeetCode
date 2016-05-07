@@ -1,17 +1,28 @@
-all: computeFactorial
+CC = g++
+CFLAGS = -c -Wall
+BUILD_PATH = build
+OBJECTS = $(BUILD_PATH)/main.o \
+		  $(BUILD_PATH)/hello.o \
+		  $(BUILD_PATH)/factorial.o
+EXE = computeFactorial
 
-computeFactorial: main.o hello.o factorial.o
-	g++ main.o hello.o factorial.o -o computeFactorial
+all: $(EXE)
 
-main.o: main.cpp
-	g++ -c -Wall main.cpp
+$(EXE): build $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(EXE)
 
-hello.o: hello.cpp
-	g++ -c -Wall hello.cpp
+$(BUILD_PATH)/main.o:
+	$(CC) $(CFLAGS) main.cpp -o $(BUILD_PATH)/main.o
 
-factorial.o: factorial.cpp
-	g++ -c -Wall factorial.cpp
+$(BUILD_PATH)/hello.o:
+	$(CC) $(CFLAGS) hello.cpp -o $(BUILD_PATH)/hello.o
+
+$(BUILD_PATH)/factorial.o: 
+	$(CC) $(CFLAGS) factorial.cpp -o $(BUILD_PATH)/factorial.o
+
+build:
+	mkdir -p build
 
 clean:
-	rm -rf *.o computeFactorial
+	rm -r $(BUILD_PATH) $(EXE)
 
