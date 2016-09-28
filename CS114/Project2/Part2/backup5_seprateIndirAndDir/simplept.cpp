@@ -64,7 +64,6 @@ struct Ray {
 struct BRDF {
     virtual Vec eval(const Vec &n, const Vec &o, const Vec &i) const = 0;
     virtual void sample(const Vec &n, const Vec &o, Vec &i, double &pdf) const = 0;
-    virtual bool isSpecular() const = 0;
 };
 
 
@@ -140,10 +139,6 @@ struct DiffuseBRDF : public BRDF {
         pdf = n.dot(i)/PI;
     }
 
-    bool isSpecular() const {
-        return false;
-    }
-
     Vec kd;
 };
 
@@ -165,10 +160,6 @@ struct SpecularBRDF : public BRDF {
     void sample(const Vec &n, const Vec &o, Vec &i, double &pdf) const {
         i = mirroredDirection(n,o);    
         pdf = 1.0;
-    }
-
-    bool isSpecular() const {
-        return true;
     }
 
     Vec ks;
@@ -218,12 +209,11 @@ bool intersect(const Ray &r, double &t, int &id) {
  * KEY FUNCTION: radiance estimator
  */
 
-// Vec emittedRadiance(const Sphere &);
-// Vec indirectedRadiance(const Vec &, const Vec &, const Sphere&, int, bool);
-// Vec directedRadiance(const Vec &, const Vec &, const Sphere&, bool);
+Vec emittedRadiance(const Sphere &);
+Vec indirectedRadiance(const Vec &, const Vec &, const Sphere&, int, bool);
+Vec directedRadiance(const Vec &, const Vec &, const Sphere&, bool);
 Vec reflectedRadiance(const Vec &, const Vec &, const Sphere&, int, bool);
-Vec Radiance(const Vec &, const Vec &, const Sphere &, int, bool);
-// Vec receivedRadiance(const Ray &, int, bool);
+Vec receivedRadiance(const Ray &, int, bool);
 
 Vec emittedRadiance(const Sphere &obj) {
 
@@ -244,39 +234,36 @@ void luminaireSample(const Sphere& obj, Vec &p, Vec &n, double &pdf) {
 }
 
 Vec directedRadiance(const Vec &x, const Vec &o, const Sphere& obj, bool flag) {
-
-    const BRDF &brdf = obj.brdf;
     
-    if (brdf.isSpecular())
-        return Vec();
+    // 
+    // return Vec();
+
+    // x info
+    Vec n = (x - obj.p).normalize();            // The normal direction
+    if ( n.dot(o) < 0 ) n = n*-1.0;
+
+    const BRDF &brdf = obj.brdf;                // Surface BRDF at x
+
+    // light info
+    const Sphere &obj_l = spheres[7];           // light source 
+    Vec x_l, n_l;
+    double pdf_l;
+    luminaireSample(obj_l, x_l, n_l, pdf_l);
+
+    Vec i = (x_l - x).normalize();
+    double disXtoXl = (x_l-x).dot(x_l-x);
+
+    // visibility
+    double t;
+    int id;
+    intersect(Ray(x,i), t, id);
+    Vec x_hit = x + i*t;                        // The intersection point
+
+    if ( (x_hit-x_l).dot(x_hit-x_l) < 0.0001 )
+        return emittedRadiance(obj_l).mult(brdf.eval(n,o,i)) * n.dot(i) * n_l.dot(Vec()-i) * (1/(disXtoXl*pdf_l));
     else
-    {
-        // x info
-        Vec n = (x - obj.p).normalize();            // The normal direction
-        if ( n.dot(o) < 0 ) n = n*-1.0;
+        return Vec();
 
-        const BRDF &brdf = obj.brdf;                // Surface BRDF at x
-
-        // light info
-        const Sphere &obj_l = spheres[7];           // light source 
-        Vec x_l, n_l;
-        double pdf_l;
-        luminaireSample(obj_l, x_l, n_l, pdf_l);
-
-        Vec i = (x_l - x).normalize();
-        double disXtoXl = (x_l-x).dot(x_l-x);
-
-        // visibility
-        double t;
-        int id;
-        intersect(Ray(x,i), t, id);
-        Vec x_hit = x + i*t;                        // The intersection point
-
-        if ( (x_hit-x_l).dot(x_hit-x_l) < 0.0001 )
-            return emittedRadiance(obj_l).mult(brdf.eval(n,o,i)) * n.dot(i) * n_l.dot(Vec()-i) * (1/(disXtoXl*pdf_l));
-        else
-            return Vec();
-    }
 }
 
 Vec indirectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth, bool flag) {
@@ -298,7 +285,7 @@ Vec indirectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth,
     double pdf;
     brdf.sample(n, o, i, pdf);
 
-    // compute intersection point, outgoing direction
+        // compute intersection point, outgoing direction
     double t;                                   // Distance to intersection
     int id = 0;                                 // id of intersected sphere
 
@@ -308,23 +295,16 @@ Vec indirectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth,
     Vec y = x + i*t;                        // The intersection point
     Vec o_y = (Vec() - i).normalize();          // The outgoing direction (= -r.d)
 
-    
-    if (brdf.isSpecular())
-        return Radiance(y, o_y, obj_y, depth+1, flag).mult(brdf.eval(n, o, i)) * n.dot(i) * (1/(pdf*p));
-    else
-        return reflectedRadiance(y, o_y, obj_y, depth+1, flag).mult(brdf.eval(n, o, i)) * n.dot(i) * (1/(pdf*p));
 
+    // return receivedRadiance(Ray(x,i), depth+1, flag).mult(brdf.eval(n, o, i)) * n.dot(i) * (1/(pdf*p));
+    return reflectedRadiance(y, o_y, obj_y, depth+1, flag).mult(brdf.eval(n, o, i)) * n.dot(i) * (1/(pdf*p));
 
 }
 
 Vec reflectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth, bool flag) {
 
     return directedRadiance(x, o, obj, flag) + indirectedRadiance(x, o, obj, depth, flag);
-}
 
-Vec Radiance(const Vec &x, const Vec &o, const Sphere &obj, int depth, bool flag) {
-    
-    return emittedRadiance(obj) + reflectedRadiance(x,o,obj,depth,flag);
 }
 
 
@@ -340,7 +320,8 @@ Vec receivedRadiance(const Ray &r, int depth, bool flag) {
     Vec x = r.o + r.d*t;                        // The intersection point
     Vec o = (Vec() - r.d).normalize();          // The outgoing direction (= -r.d)
     
-    return Radiance(x,o,obj,depth,flag);
+    return emittedRadiance(obj) + reflectedRadiance(x,o,obj,depth,flag);
+
 }
 
 
