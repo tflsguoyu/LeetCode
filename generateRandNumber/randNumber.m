@@ -7,23 +7,23 @@ R_global = 1;
 a_global = 0.6;
 b_global = 0.9;
 
-% N_global = 1000000000;
-N_global = 1000;
+N_global = 1000000000;
+% N_global = 1000;
 
 
 randNumber_global_N1 = [];
 
-% tic
-% Generate1(L_global,R_global,N_global);
-% disp(['generating date time is ' num2str(toc)]);
-
 tic
-Generate2(L_global,R_global,N_global,100);
+Generate1(L_global,R_global,N_global);
 disp(['generating date time is ' num2str(toc)]);
 
-% randNumber_global_N1 = sort(randNumber_global_N1)
-% hist(randNumber_global_N1, 10)
-
+% tic
+% Generate2(L_global,R_global,N_global,100);
+% disp(['generating date time is ' num2str(toc)]);
+% 
+% % randNumber_global_N1 = sort(randNumber_global_N1)
+% % hist(randNumber_global_N1, 10)
+% 
 numberOfRandNumber = 0;
 tic 
 Query1(a_global,b_global,randNumber_global_N1)
@@ -31,11 +31,11 @@ disp(['Query time is ' num2str(toc)]);
 numberOfRandNumber
 whos randNumber_global_N1;
 
-numberOfRandNumber = 0;
-tic
-Query2(a_global,b_global,L_global,R_global,N_global,100)
-toc
-numberOfRandNumber
+% numberOfRandNumber = 0;
+% tic
+% Query2(a_global,b_global,L_global,R_global,N_global,100)
+% toc
+% numberOfRandNumber
 
 
 

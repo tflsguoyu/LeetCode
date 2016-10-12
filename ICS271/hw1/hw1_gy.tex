@@ -70,19 +70,31 @@ $P_{43}$: if $b>0\, \&\, a<3$, $(a,b)\rightarrow(\min(a+b,3),\max(b-(3-a),0))$
 
 \end{enumerate}
 
-\item Graph of all the state space nodes (remove same state node)
+\item Graph of all the state space nodes (same state only appear once)
 
 \begin{forest}
 for tree={ellipse,draw,edge=->}
 [{$\mathbf{(0,0)}$}
   [{$(3,0)$}, edge label={node[midway,left,font=\scriptsize] {$T_3$}}  
     [{$(3,4)$}, edge label={node[midway,left,font=\scriptsize] {$T_4$}}]
-    [{$(0,3)$}, edge label={node[midway,right,font=\scriptsize] {$P_{34}$}}]
+    [{$(0,3)$}, edge label={node[midway,right,font=\scriptsize] {$P_{34}$}}
+      [{$(3,3)$}, edge label={node[midway,left,font=\scriptsize] {$T_3$}}
+        [{$(2,4)$}, edge label={node[midway,left,font=\scriptsize] {$P_{34}$}}
+          [{$(2,0)$}, edge label={node[midway,left,font=\scriptsize] {$D_4$}}
+            [{$(0,2)$}, edge label={node[midway,left,font=\scriptsize] {$P_{34}$}}]
+          ]
+        ]
+      ]
+    ]
   ]
   [{$\mathbf{(0,4)}$}, edge label={node[midway,right,font=\scriptsize] {$T_4$}}
     [{$\mathbf{(3,1)}$}, edge label={node[midway,left,font=\scriptsize] {$P_{43}$}}
       [{$\mathbf{(0,1)}$}, edge label={node[midway,left,font=\scriptsize] {$D_3$}}
-        [{$\mathbf{(1,0)}$}, edge label={node[midway,left,font=\scriptsize] {$P_{43}$}}]
+        [{$\mathbf{(1,0)}$}, edge label={node[midway,left,font=\scriptsize] {$P_{43}$}}
+          [{$(1,4)$}, edge label={node[midway,left,font=\scriptsize] {$T_4$}}
+            [{$(3,2)$}, edge label={node[midway,left,font=\scriptsize] {$P_{43}$}}]
+          ]
+        ]
       ]
     ]
   ]
@@ -271,9 +283,9 @@ for tree={ellipse,draw,edge=->}
 % 5.
 \item
 
-If hash table with $O(1)$, No. of comparisons is .
+If hash table is $O(1)$, No. of comparisons is $O(b^d)$.
 
-If hash table with $O(n)$, No. of comparisons is .
+If hash table is $O(n)$, No. of comparisons is $O(b^{2d})$.
 
 
 \end{enumerate}
