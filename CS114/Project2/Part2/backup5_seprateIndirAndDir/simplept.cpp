@@ -303,7 +303,8 @@ Vec indirectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth,
 
 Vec reflectedRadiance(const Vec &x, const Vec &o, const Sphere& obj, int depth, bool flag) {
 
-    return directedRadiance(x, o, obj, flag) + indirectedRadiance(x, o, obj, depth, flag);
+    // return directedRadiance(x, o, obj, flag) + indirectedRadiance(x, o, obj, depth, flag);
+    return directedRadiance(x, o, obj, flag);
 
 }
 
