@@ -1,0 +1,94 @@
+\documentclass{article}
+\topmargin -0.5in \oddsidemargin -0.25in \textheight 9in
+\textwidth 6.5in
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\newcommand{\shrink}[1]{}
+
+\begin{document}
+{\bf ICS 271}
+
+{\bf Fall 2016}
+
+{\bf Student ID : 26642334}
+
+{\bf Student Name: Yu Guo}
+
+{\bf Instructor : Kalev Kask}
+
+{\bf Homework Assignment 3}
+
+{\bf Due Tuesday, 10/25}
+
+
+
+
+\begin{enumerate}
+
+% 1.
+\item
+
+  \begin{enumerate}
+    \item $<3^9$
+
+    \item Depth of the tree = 9 (excluding root node)
+
+    Does the complete game tree contain all the board positions you counted in (a)? No, eg. `less $\bigcirc$ than $\times$' will not appear in the tree. 
+
+    Does it contain additional board positions? No.
+
+    \item See figure below. 
+
+    % \includegraphics[width=0.6\textwidth]{figures/Slide1.PNG}
+
+    \item See figure below. (Same figure with (c))
+
+    % \includegraphics[width=0.6\textwidth]{figures/Slide1.PNG}
+
+    \item 
+
+
+  \end{enumerate}
+
+
+% 2.
+\item
+
+Yes. The game tree is complete, so alpha-beta pruning algorithm is guaranteed to force a win.
+
+% 3.
+\item
+  
+  \begin{enumerate}
+    \item Fourth node from left to right.
+
+    % \includegraphics[width=0.6\textwidth]{figures/Slide1.PNG}
+
+    \item node 1,2,3,4,5
+  \end{enumerate}
+
+
+% 4.
+\item
+
+If $a>0$, then we have
+$$\min(5ax_1+b,5ax_2+b,\dots,5ax_n+b) = 5a\min(x_1,x_2,\dots,x_n)+b$$
+$$\max(5ax_1+b,5ax_2+b,\dots,5ax_n+b) = 5a\max(x_1,x_2,\dots,x_n)+b$$
+That means the linear transformation ($a>0$) of leaf nodes would not affect the value of parent node. Maximum or minimum choice would not change.
+
+% 5.
+\item
+
+Take the average over all $n$ executions is Monte Carlo method. According to \textbf{Strong Law of Large Numbers},
+$$\frac{1}{n}\sum_{i=1}^n x_i \xrightarrow[]{n\rightarrow\infty} \mathbf{E}(\mathbf{X}), x_i\in\mathbf{X}$$
+The average of more samples leed to the true expected value.
+
+\end{enumerate}
+
+\end{document}
