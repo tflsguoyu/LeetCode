@@ -37,11 +37,15 @@
   \begin{enumerate}
     \item $<3^9$
 
-    \item Depth of the tree = 9 (excluding root node)
+    \item - Depth of the tree = 9 (excluding root node)
 
-    Does the complete game tree contain all the board positions you counted in (a)? No, eg. `less $\bigcirc$ than $\times$' will not appear in the tree. 
+    - Does the complete game tree contain all the board positions you counted in (a)? 
 
-    Does it contain additional board positions? No.
+    ~ No. For example, `less $\bigcirc$ than $\times$' will not appear in the tree. 
+
+    - Does it contain additional board positions? 
+
+    ~ No.
 
     \item See Figure 1. 
 
@@ -71,10 +75,15 @@ Yes. The game tree is complete, so alpha-beta pruning algorithm is guaranteed to
 % 4.
 \item
 
-If $a>0$, then we have
+To prove this theory, the key idea is to prove that after each min, max and chance node, the choice would not be changed. 
+Suppose that the value of each child node are $x_1,x_2,\dots,x_n$, and transformation is $5ax+b$, where $a>0$. We have
+
 $$\min(5ax_1+b,5ax_2+b,\dots,5ax_n+b) = 5a\min(x_1,x_2,\dots,x_n)+b$$
 $$\max(5ax_1+b,5ax_2+b,\dots,5ax_n+b) = 5a\max(x_1,x_2,\dots,x_n)+b$$
-That means the linear transformation ($a>0$) of leaf nodes would not affect the value of parent node. Maximum or minimum choice would not change.
+$$p_1(ax_1+b)+p_2(ax_2+b)+\dots+p_n(ax_n+b) = a(p_1x_1+p_2x_2+\dots+p_nx_n)+b$$
+
+Since $x>y \Rightarrow ax+b>ay+b$ if $a>0$, that means the linear transformation ($a>0$) of child nodes would not affect the choice of parent node. Maximum or minimum choice would not be changed. 
+The best choice at the root will be the same as the best choice in the original tree.
 
 % 5.
 \item
@@ -82,6 +91,8 @@ That means the linear transformation ($a>0$) of leaf nodes would not affect the 
 Take the average over all $n$ executions is Monte Carlo method. According to \textbf{Strong Law of Large Numbers},
 $$\frac{1}{n}\sum_{i=1}^n x_i \xrightarrow[]{n\rightarrow\infty} \mathbf{E}(\mathbf{X}), x_i\in\mathbf{X}$$
 The average of more samples leed to the true expected value.
+Mathematically, we can never get correct results, but in practice, with a large number of $n$, it's a very good estimation of 
+the real value.
 
 \end{enumerate}
 
