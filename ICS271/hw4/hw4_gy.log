@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.10.12)  2 NOV 2016 17:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.10.12)  2 NOV 2016 18:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -488,9 +488,8 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/tabto-ltx/tabto.sty
-Package: tabto 2013/03/25  v 1.3  Another tabbing mechanism
-\CurrentLineWidth=\dimen162
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen162
 ) (./hw4_gy.aux)
 \openout1 = `hw4_gy.aux'.
 
@@ -627,28 +626,109 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--67
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--74
+Underfull \hbox (badness 10000) in paragraph at lines 70--78
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--74
+Underfull \hbox (badness 10000) in paragraph at lines 70--78
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--74
+Underfull \hbox (badness 10000) in paragraph at lines 70--78
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<figure/Slide1.PNG, id=15, 963.6pt x 511.9125pt>
-File: figure/Slide1.PNG Graphic file (type png)
- <use figure/Slide1.PNG>
-Package pdftex.def Info: figure/Slide1.PNG used on input line 106.
-(pdftex.def)             Requested size: 46.97836pt x 24.9566pt.
+Underfull \hbox (badness 10000) in paragraph at lines 93--104
+
+ []
+
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 126.
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 126--126
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 126--126
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 127--127
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 127--127
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 128--128
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 128--128
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 129--129
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 129--129
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 130--130
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 130--130
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 131--131
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 131--131
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 132--132
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 132--132
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
+
+Overfull \hbox (3.44588pt too wide) in paragraph at lines 133--133
+[][][][]\OMS/cmsy/m/n/9 f\OT1/cmr/m/n/9 1,2,3,  
+ []
+
+
+Overfull \hbox (0.87645pt too wide) in paragraph at lines 133--133
+[]\OT1/cmr/m/n/9 7,8,9\OMS/cmsy/m/n/9 g  
+ []
+
 \forest@temp@box=\box32767 (local)
 \forest@temp@box=\box32766 (local)
 \forest@temp@box=\box32765 (local)
@@ -665,28 +745,29 @@ Package pdftex.def Info: figure/Slide1.PNG used on input line 106.
 \forest@temp@box=\box32754 (local)
 \forest@temp@box=\box32753 (local)
 \forest@temp@box=\box32752 (local)
-
-[2 <./figure/Slide1.PNG>] [3] (./hw4_gy.aux) ) 
+[2] [3] (./hw4_gy.aux) ) 
 Here is how much of TeX's memory you used:
- 18273 strings out of 493304
- 402633 string characters out of 6139870
- 434044 words of memory out of 5000000
- 21440 multiletter control sequences out of 15000+600000
- 5647 words of font info for 23 fonts, out of 8000000 for 9000
+ 18327 strings out of 493304
+ 403415 string characters out of 6139870
+ 449781 words of memory out of 5000000
+ 21495 multiletter control sequences out of 15000+600000
+ 6201 words of font info for 25 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 99i,9n,129p,826b,3656s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on hw4_gy.pdf (3 pages, 139533 bytes).
+ 99i,11n,129p,826b,3708s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/symbols/msam10.pfb>
+Output written on hw4_gy.pdf (3 pages, 120489 bytes).
 PDF statistics:
- 52 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
+ 57 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

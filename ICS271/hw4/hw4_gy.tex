@@ -7,7 +7,7 @@
 \usepackage{tikz}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{tabto}
+\usepackage{multirow}
 
 \begin{document}
 {\bf ICS 271}
@@ -70,17 +70,17 @@ if $c_{\beta1}=c_{\beta2}$, then $t_{\gamma1} \neq t_{\gamma2}$, it means one cl
 Assume big rectangle locate in a 2-$D$ coordinate system, range from $[0,X]\times[0,Y]$. \\ \\
 $X = \{(x_i,y_i,dX_i,dY_i) | i=1,2,\dots,n\}$, each $X_i$ represents a small rectangle with it's position(bottom left corner) ($x_i,y_i$) and size ($dX_i,dY_i$). \\ \\
 $D_i = \{(x,y,dX,dY) | dX \leqslant X, dY \leqslant Y\}$ \\ \\
-$C_1$: For each small rectangle $(x_i,y_i,dX_i,dY_i)$, we have,
-$$ x_i \geqslant 0 ~~and $$
-$$ x_i+dX \leqslant X ~~and $$
-$$ y_i \geqslant 0 ~~and $$
-$$ y_i+dY \leqslant Y $$
+$C_1$: For each small rectangle $(x_i,y_i,dX_i,dY_i)$, we have, \\
+$ x_i \geqslant 0 $ and 
+$ x_i+dX \leqslant X $ and
+$ y_i \geqslant 0 $ and 
+$ y_i+dY \leqslant Y $
 
-$C_2$: For any of two small rectangles $(x_i,y_i,dX_i,dY_i)$ and $(x_j,y_j,dX_j,dY_j)$, we have,
-$$ x_i + dX_i \leqslant x_j ~~or $$
-$$ x_j + dX_j \leqslant x_i ~~or $$
-$$ y_i + dY_i \leqslant y_j ~~or $$
-$$ y_j + dY_j \leqslant y_i $$
+$C_2$: For any of two small rectangles $(x_i,y_i,dX_i,dY_i)$ and $(x_j,y_j,dX_j,dY_j)$, we have, \\
+$ x_i + dX_i \leqslant x_j $ or 
+$ x_j + dX_j \leqslant x_i $ or 
+$ y_i + dY_i \leqslant y_j $ or 
+$ y_j + dY_j \leqslant y_i $
 
 
 
@@ -91,21 +91,67 @@ $$ y_j + dY_j \leqslant y_i $$
     \begin{enumerate}
     \item
     For any neighboring pair of squares $i$ and $j$ such that $i \neq j$, \\
-    Relation: $|X_i-X_j| \geqslant 2$ \\
-    Domain: (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), \\
-            (2,4), (2,5), (2,6), (2,7), (2,8), (2,9), \\
-            (3,1), (3,5), (3,6), (3,7), (3,8), (3,9), \\
-            (4,1), (4,2), (4,6), (4,7), (4,8), (4,9), \\
-            (5,1), (5,2), (5,3), (5,7), (5,8), (5,9), \\
-            (6,1), (6,2), (6,3), (6,4), (6,8), (3,9), \\
-            (7,1), (7,2), (7,3), (7,4), (7,5), (7,9), \\
-            (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), \\
-            (9,1), (9,2), (9,3), (9,4), (9,5), (9,6), (9,7)
-    
-    \begin{figure}[ht]
-    \includegraphics[width=0.1\textwidth]{figure/Slide1.PNG}
-    \caption{}
-    \end{figure}
+    % Relation: $|X_i-X_j| \geqslant 2$ \\
+    % Domain: (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), \\
+    %         (2,4), (2,5), (2,6), (2,7), (2,8), (2,9), \\
+    %         (3,1), (3,5), (3,6), (3,7), (3,8), (3,9), \\
+    %         (4,1), (4,2), (4,6), (4,7), (4,8), (4,9), \\
+    %         (5,1), (5,2), (5,3), (5,7), (5,8), (5,9), \\
+    %         (6,1), (6,2), (6,3), (6,4), (6,8), (3,9), \\
+    %         (7,1), (7,2), (7,3), (7,4), (7,5), (7,9), \\
+    %         (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), \\
+    %         (9,1), (9,2), (9,3), (9,4), (9,5), (9,6), (9,7)
+
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Relation & Domain \\
+    \hline
+    \multirow{9}{*}{$|X_i-X_j| \geqslant 2$} & (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), \\
+            & (2,4), (2,5), (2,6), (2,7), (2,8), (2,9), \\
+            & (3,1), (3,5), (3,6), (3,7), (3,8), (3,9), \\
+            & (4,1), (4,2), (4,6), (4,7), (4,8), (4,9), \\
+            & (5,1), (5,2), (5,3), (5,7), (5,8), (5,9), \\
+            & (6,1), (6,2), (6,3), (6,4), (6,8), (3,9), \\
+            & (7,1), (7,2), (7,3), (7,4), (7,5), (7,9), \\
+            & (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), \\
+            & (9,1), (9,2), (9,3), (9,4), (9,5), (9,6), (9,7) \\
+    \hline      
+    \end{tabular}
+    \end{table}
+
+    \begin{center}
+    \begin{tikzpicture}
+      \node[circle,draw] (1) at ( 0, 0) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (2) at (-2,-2) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (3) at ( 0,-2) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (4) at ( 2,-2) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (5) at (-2,-4) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (6) at ( 0,-4) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (7) at ( 2,-4) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+      \node[circle,draw] (8) at ( 0,-6) [text width=0.8cm] {\small \{1,2,3,\\4,5,6,\\7,8,9\}};
+ 
+      \path[<->] (1) edge (2);
+      \path[<->] (1) edge (3);
+      \path[<->] (1) edge (4);
+      \path[<->] (2) edge (3);
+      \path[<->] (3) edge (4);
+      \path[<->] (2) edge (5);
+      \path[<->] (2) edge (6);
+      \path[<->] (3) edge (5);
+      \path[<->] (3) edge (6);
+      \path[<->] (3) edge (7);
+      \path[<->] (4) edge (6);
+      \path[<->] (4) edge (7);
+      \path[<->] (5) edge (6);
+      \path[<->] (6) edge (7);
+      \path[<->] (5) edge (8);
+      \path[<->] (6) edge (8);
+      \path[<->] (7) edge (8);
+    \end{tikzpicture}
+    \end{center}
+
 
     \item
     Yes, it's arc-consistent.
@@ -132,6 +178,7 @@ $$ y_j + dY_j \leqslant y_i $$
     \item
     Yes, it's arc-consistent.
     
+    \begin{center}
     \begin{forest}
     for tree={ellipse,draw,edge=-}
     [{7,8}
@@ -157,6 +204,7 @@ $$ y_j + dY_j \leqslant y_i $$
         ]
     ]
     \end{forest}
+    \end{center}
 
     \item
     Yes, it's consistent. One solution is,
