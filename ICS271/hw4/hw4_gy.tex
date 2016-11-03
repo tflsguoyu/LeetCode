@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{multirow}
+\usepackage{siunitx}
 
 \begin{document}
 {\bf ICS 271}
@@ -234,36 +235,104 @@ Solve problem:
 
 Constraints:
 $$ O + O = R + 10X_1 $$
-$$ W + W + X_1 = U + 10X_2 $$
-$$ T + T + X_2 = O + 10X_3 $$
-$$ X_3 = F $$
+$$ W + W + C_1 = U + 10C_2 $$
+$$ T + T + C_2 = O + 10C_3 $$
+$$ C_3 = F $$
+$$ alldiff(T,W,O,F,U,R) $$
 
 Domain:
-$$ D_F,D_{X_3} = \{1\} $$
-$$ D_{X_1},D_{X_2} = \{0,1\} $$
+$$ D_F,D_{C_3} = \{1\} $$
+$$ D_{C_1},D_{C_2} = \{0,1\} $$
 $$ D_T = \{1,2,3,4,5,6,7,8,9\} $$
 $$ D_W,D_O,D_U,D_R = \{0,1,2,3,4,5,6,7,8,9\} $$
 
-A trace to a solution:
-
-
 A solution: 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{tabular}{lllll}
-  &   & T & W & O \\
-+ &   & T & W & O \\ \hline
-  & F & O & U & R
+  &   & 7 & 3 & 4 \\
++ &   & 7 & 3 & 4 \\ \hline
+  & 1 & 4 & 6 & 8
+\end{tabular}
+\end{table}
+
+A trace to a solution:
+\begin{table}[ht]
+\centering
+\begin{tabular}{|m{0.05\linewidth}<{\centering}|m{0.7\linewidth}<{\centering}|m{0.25\linewidth}|}
+\hline
+Node & State & Action \\
+\hline
+0 & 
+$ D_F,D_{C_3} = \{1\} $,
+$ D_{C_1},D_{C_2} = \{0,1\} $,
+$ D_T = \{1,2,3,4,5,6,7,8,9\} $,
+$ D_W,D_O,D_U,D_R = \{0,1,2,3,4,5,6,7,8,9\} $
+& Initial State \\
+\hline  
+1 & 
+$ F=1,D_{C_3}=\{1\} $,
+$ D_{C_1},D_{C_2} = \{0,1\} $,
+$ D_T = \{2,3,4,5,6,7,8,9\} $,
+$ D_W,D_O,D_U,D_R = \{0,2,3,4,5,6,7,8,9\} $
+& Assign $F=1$ \\
+\hline  
+2 & 
+$ F=1,C_3=1 $,
+$ D_{C_1},D_{C_2} = \{0,1\} $,
+$ D_T = \{5,6,7,8,9\} $,
+$ D_W,D_O,D_U,D_R = \{0,2,3,4,5,6,7,8,9\} $
+& Assign $C_3=1$ \\
+\hline
+3 & 
+$ F=1,C_3=1,C_2=0 $,
+$ D_{C_1} = \{0,1\} $,
+$ D_T = \{5,6,7,8,9\} $,
+$ D_W = \{0,2,3,4\} $,
+$ D_O = \{0,2,4,6,8\} $,
+$ D_U,D_R = \{0,2,3,4,5,6,7,8,9\} $
+& Assign $C_2=0$ \\
+\hline     
+4 & 
+$ F=1,C_3=1,C_2=0,C_1=0 $,
+$ D_T = \{5,6,7,8,9\} $,
+$ D_W = \{0,2,3,4\} $,
+$ D_O = \{0,2,4\} $,
+$ D_U = \{0,2,4,6,8\} $
+$ D_R = \{0,2,3,4,5,6,7,8,9\} $
+& Assign $C_1=0$ \\
+\hline      
+5 & 
+$ F=1,C_3=1,C_2=0,C_1=0, T=6,O=2,R=4 $,
+$ D_W = \{0,3\} $,
+$ D_U = \{0,8\} $
+& Assign $O=2$, then $T=6,R=4$ \\
+\hline   
+6 & 
+$ F=1,C_3=1,C_2=0,C_1=0, T=7,O=4,R=8 $,
+$ D_W = \{0,2,3\} $,
+$ D_U = \{0,2,6\} $
+& Assign $W=3$ or $W=0$, no solution in $D_U$; return to node 5, assign $O=4$, then $T=7,R=8$ \\
+\hline
+7 & 
+$ F=1,C_3=1,C_2=0,C_1=0, T=7,O=4,R=8 $,
+$ D_W = \{3\} $,
+$ D_U = \{6\} $
+& Assign $W=0$ or $W=2$, then no solution in $D_U$ \\
+\hline  
+8 & 
+$ F=1,C_3=1,C_2=0,C_1=0, T=7,O=4,R=8,W=3,U=6 $
+& Assign $W=3$, then $U=6$. Find Solution! \\
+\hline    
 \end{tabular}
 \end{table}
 
 
-
 % 7.
 \item
-$a_1$: arc consistency with domain splitting
-$a_2$: variable elimination
-$a_3$: stochastic local search
+$a_1$: arc consistency with domain splitting \\
+$a_2$: variable elimination \\
+$a_3$: stochastic local search \\
 $a_4$: genetic algorithms
 
 \begin{enumerate}
