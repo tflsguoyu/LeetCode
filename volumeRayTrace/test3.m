@@ -69,7 +69,7 @@ function test
     %%    
         y = [];
 
-        for samples = 1: 100000
+        for samples = 1: 200000
             
             x(1,:) = [rand/2+0.25,1];
             w(1,:) = [cos(1.8),sin(1.8)];

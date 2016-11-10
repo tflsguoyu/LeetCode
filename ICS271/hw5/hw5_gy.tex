@@ -241,12 +241,14 @@ They generate different traces based on $KB$. FC is data driven and DPLL has ear
 \end{enumerate}
 
 
-	\begin{table}[h]
+\newpage
+
+	\begin{table}[!h]
 	\centering
 	\caption{6-(a)}
 	\begin{tabular}{|c|c|c|c|c|c|c|}
 	\hline
-	$P$ & $Q$ & $R$ & $Q \land R$ & $P \land Q$ & $P \land (Q \land R)$ & $(P \land Q) \land R)$\\ \hline
+	$P$ & $Q$ & $R$ & $Q \land R$ & $P \land Q$ & $P \land (Q \land R)$ & $(P \land Q) \land R$\\ \hline
 	T & T & T & T & T & T & T  \\ \hline
 	T & T & F & F & T & F & F  \\ \hline
 	T & F & T & F & F & F & F  \\ \hline
@@ -258,9 +260,7 @@ They generate different traces based on $KB$. FC is data driven and DPLL has ear
 	\end{tabular}
 	\end{table}
 
-
-
-	\begin{table}[h]
+	\begin{table}[!h]
 	\centering
 	\caption{6-(b)}
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -277,9 +277,7 @@ They generate different traces based on $KB$. FC is data driven and DPLL has ear
 	\end{tabular}
 	\end{table}
 
-
-
-	\begin{table}[h]
+	\begin{table}[!h]
 	\centering
 	\caption{6-(c)}
 	\begin{tabular}{|c|c|c|c|c|c|c|}
@@ -292,15 +290,12 @@ They generate different traces based on $KB$. FC is data driven and DPLL has ear
 	\end{tabular}
 	\end{table}	
 
-
-
-
-	\begin{table}[h]
+	\begin{table}[!h]
 	\centering
 	\caption{6-(d)}
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
 	\hline
-	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg P \lor \neg Q$ & $P \Leftrightarrow Q)$ & $(P \land Q) \lor (\neg P \lor \neg Q)$ \\ \hline
+	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg P \lor \neg Q$ & $P \Leftrightarrow Q$ & $(P \land Q) \lor (\neg P \lor \neg Q)$ \\ \hline
 	T & T & F & F & T & F & T & T \\ \hline
 	T & F & F & T & F & F & F & F \\ \hline
 	F & T & T & F & F & F & F & F \\ \hline
@@ -355,7 +350,7 @@ They generate different traces based on $KB$. FC is data driven and DPLL has ear
 	\caption{7-(d)}
 	\begin{tabular}{|c|c|c|c|}
 	\hline
-	$S$ & $F$ & $\neg F$ & $S \lor F \lor \neg F)$  \\ \hline
+	$S$ & $F$ & $\neg F$ & $S \lor F \lor \neg F$  \\ \hline
 	T & T & F & T\\ \hline
 	T & F & T & T\\ \hline
 	F & T & F & T\\ \hline
