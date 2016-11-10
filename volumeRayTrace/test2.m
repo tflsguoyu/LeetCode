@@ -69,7 +69,7 @@ function test
     %%    
         y = [];
 
-        for samples = 1: 100000
+        for samples = 1: 200000
             w(2:end,:) = [];
             x(2:end,:) = [];
 
@@ -91,7 +91,7 @@ function test
         end
 
         % density map
-        mapSize = 1000;
+        mapSize = 50;
         densityMap = zeros(mapSize,mapSize);
         for i = 1: size(y,1)
             c = round((1-y(i,2))*mapSize);
@@ -100,7 +100,7 @@ function test
             densityMap(c, r) = densityMap(c, r) + 1;
         end
 
-        densityMap = conv2(densityMap, ones(10,10));
+%         densityMap = conv2(densityMap, ones(10,10));
         subplot(3,4,flag+4)
         imagesc(densityMap)
         colorbar
