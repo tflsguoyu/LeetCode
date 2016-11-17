@@ -1,0 +1,209 @@
+\documentclass{article}
+\topmargin -0.5in \oddsidemargin -0.25in \textheight 9in
+\textwidth 6.5in
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{siunitx}
+
+
+\begin{document}
+{\bf ICS 271}
+
+{\bf Fall 2016}
+
+{\bf Student ID : 26642334}
+
+{\bf Student Name: Yu Guo}
+
+{\bf Instructor : Kalev Kask}
+
+{\bf Homework Assignment 6}
+
+{\bf Due Thursday, 11/17}
+
+
+
+
+\begin{enumerate}
+
+% 1.
+\item
+	\begin{enumerate}
+		\item No two people have the same social security number. \\
+		Not good. $x$ and $y$ should not be the same person and using $\Rightarrow$ with $\exists$ leads to a very weak statement.
+
+		$$\neg\exists x,y,n \; Person(x)\land Person(y)\land \neg(x=y) \land HasSS\#(x,n)\land HasSS\#(y,n)$$
+
+
+		\item John's social security number is the same as Mary's.\\
+		Good. Do not need to modify.
+
+		$$\exists n \; HasSS\#(John,n) \land HasSS\#(Mary,n)$$
+
+		\item Everyone's social security number has nine digits. \\
+		Not good. For each person, it should only have one SSN but not all.
+
+		$$\forall x \; Person(x) \Rightarrow [\exists n \; HasSS\#(x,n) \land Digits(n,9)]$$
+
+
+		\item Rewrite as follows.
+		$$\neg\exists x,y \; Person(x)\land Person(y) \land [SS\#(x)=SS\#(y)]$$
+		$$SS\#(John)=SS\#(Mary)$$
+		$$\forall x \; Person(x) \Rightarrow Digits(SS\#(x),9)$$
+
+
+	\end{enumerate}
+
+% 2.
+\item
+	\begin{enumerate}
+		\item Not.
+		\item $\{x/A,y/B,z/B\}$
+		\item $\{x/David\}$
+		\item $\{x/g(u),u/f(v)\}$
+		\item $\{x/B,y/B,z/B\}$
+	\end{enumerate}
+
+% 3.
+\item Define:\\
+ $Alpine(x)$: $x$ belong to Alpine Club. \\
+ $Skier(x)$: $x$ is a skier. \\
+ $Climber(x)$: $x$ is a mountain climber. \\
+ $Like(x,w)$: $x$ like weather $w$. \\
+
+ Statement: \\
+ $$Alpine(Tony)$$
+ $$Alpine(Mike)$$
+ $$Alpine(John)$$
+ $$\forall x \; Alpine(x) \Rightarrow Skier(x)\lor Climber(x)$$
+ $$\neg\exists x \; Climber(x) \land Like(x,Rain)$$ 
+ $$\forall x \; Skier(x) \Rightarrow Like(x,Snow)$$
+ $$\forall x \; Like(John,x) \Rightarrow \neg Like(Mike,x)$$
+ $$\forall x \; \neg Like(John,x) \Rightarrow Like(Mike,x)$$
+ $$\neg Like(John,Rain)$$
+ $$\neg Like(John,Snow)$$
+
+ Question: \textsc{AskVars}$(KB, Alpine(x)\land Climber(x)\land \neg Skier(x))$
+
+
+   
+
+
+% 4.
+\item Only (a) is the result.
+
+
+% 5.
+\item 
+	\begin{enumerate}
+		\item $\forall x \; Horse(x) \Rightarrow Mammal(x)$ \\
+			  $\forall x \; Cow(x) \Rightarrow Mammal(x)$ \\
+			  $\forall x \; Sheep(x) \Rightarrow Mammal(x)$ \\
+			   
+		\item $\forall x,y \; \mathit{Offspring}(x,y)\land Pig(y) \Rightarrow Pig(x)$ \\
+			  
+		\item $Pig(Bluebeard)$
+		\item $Parent(Bluebeard,Charlie)$
+		\item $\forall x,y \; \mathit{Offspring}(x,y) \Rightarrow Parent(y,x)$\\
+			$\forall x,y \; Parent(x,y) \Rightarrow \mathit{Offspring}(y,x)$
+		\item $\forall x \; Mammal(x) \Rightarrow \exists y \; Parent(y,x)$  
+	\end{enumerate}
+
+
+% 6.
+\item Query $\exists h \; Pig(h)$
+
+\begin{forest}
+for tree={edge=->}
+[{$Pig(h)$}
+  	[{$\mathit{Offspring}(h,y)$}
+  		[{$Parent(y,h)$}
+  			[{$\{y/Bluebeard,h/Charlie\}$}]
+  		]
+  	]
+  	[{$Pig(Bluebeard)$}
+  		[{$\mathit{Offspring}(Bluebeard,y)$}
+  			[{$Parent(y,Bluebeard)$}
+  				[{$\mathit{Offspring}(Bluebeard,y)$}
+  					[...]
+  				]
+  			]
+  		]
+  		[...]
+  	]
+]
+\end{forest}
+
+
+
+% 7.
+\item
+\begin{enumerate}
+	\item
+	\begin{align*}
+		& ((\exists x)[P(x)] \lor (\exists x)[Q(x)]) \Rightarrow (\exists y)[P(y) \lor Q(y)] \\
+		= & \neg ((\exists x)[P(x)] \lor (\exists x)[Q(x)]) \lor (\exists y)[P(y) \lor Q(y)] \\
+		= & ((\neg\exists x)[P(x)] \land (\neg\exists x)[Q(x)]) \lor (\exists y)[P(y) \lor Q(y)] \\
+		= & ((\forall x)[\neg P(x)] \land (\forall x)[\neg Q(x)]) \lor (\exists y)[P(y) \lor Q(y)] \\
+		= & ((\forall x)[\neg P(x)] \land (\forall x)[\neg Q(x)]) \lor (P(Y) \lor Q(Y)) \\
+		= & (\neg P(x_1) \land \neg Q(x_2)) \lor (P(Y) \lor Q(Y)) \\
+		= & (\neg P(x_1) \lor P(Y) \lor Q(Y)) \land (\neg Q(x_2) \lor P(Y) \lor Q(Y)) 
+	\end{align*}
+	
+	\item 
+	\begin{align*}
+		& (\forall x)[P(x)] \Rightarrow (\exists z)[(\forall x)[Q(x,z)] \lor (\forall x)[R(x,y,z)]] \\
+		= & (\neg\forall x)[P(x)] \lor (\exists z)[(\forall x)[Q(x,z)] \lor (\forall x)[R(x,y,z)]] \\
+		= & (\exists x)[\neg P(x)] \lor (\exists z)[(\forall x)[Q(x,z)] \lor (\forall x)[R(x,y,z)]] \\
+		= & \neg P(X) \lor (\forall x)[Q(x,Z)] \lor (\forall x)[R(x,y,Z)] \\
+		= & \neg P(X) \lor Q(x_1,Z) \lor R(x_2,y,Z) 
+	\end{align*}
+	
+	\item 
+	\begin{align*}
+		& (\forall x)[P(x) \Rightarrow Q(x,y)] \Rightarrow ((\exists y)[P(y)] \land (\exists v)[Q(y,v)]) \\
+		= & (\neg\forall x)[\neg P(x) \lor Q(x,y)] \lor ((\exists y)[P(y)] \land (\exists v)[Q(y,v)]) \\
+		= & (\exists x)[P(x) \land \neg Q(x,y)] \lor ((\exists y)[P(y)] \land (\exists v)[Q(y,v)]) \\
+		= & (P(X) \land \neg Q(X,y)) \lor (P(Y) \land Q(y,V)) \\
+		= & (P(X) \lor (P(Y)) \land (P(X) \lor Q(y,V)) \land (\neg Q(X,y) \lor (P(Y)) \land (\neg Q(X,y) \lor Q(y,V)) 
+	\end{align*}
+
+\end{enumerate}
+
+
+% 8. 
+\item 
+	\begin{enumerate}
+	\item Statements.
+	$$(\exists x)[Push(x) \land Blue(x)] \Rightarrow (\forall y)[\neg Push(y) \Rightarrow Green(y)]$$
+	$$(\forall x)[(Blue(x) \land \neg Green(x)) \lor (\neg Blue(x) \land Green(x))]$$
+	$$(\exists x)[\neg Push(x)] \Rightarrow (\forall y)[Push(y) \Rightarrow Blue(y)]$$
+	$$Push(O_1)$$
+	$$\neg Push(O_2)$$
+
+
+	\item Convert to clause form.
+	$$\neg Push(x_1) \lor \neg Blue(x_1) \lor Push(y_1) \lor Green(y_1)$$
+	$$(Blue(x_2) \lor Green(x_2)) \land (\neg Blue(x_2) \lor \neg Green(x_2))$$
+	$$Push(x_3) \lor \neg Push(y_2) \lor Blue(y_2)$$
+	$$Push(O_1)$$
+	$$\neg Push(O_2)$$
+	
+
+
+	\item Prove $\exists x \; Green(x)$
+	
+	\end{enumerate}
+
+
+\end{enumerate}
+
+
+
+
+\end{document}

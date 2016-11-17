@@ -1,0 +1,362 @@
+\documentclass{article}
+\topmargin -0.5in \oddsidemargin -0.25in \textheight 9in
+\textwidth 6.5in
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{siunitx}
+
+
+\begin{document}
+{\bf ICS 271}
+
+{\bf Fall 2016}
+
+{\bf Student ID : 26642334}
+
+{\bf Student Name: Yu Guo}
+
+{\bf Instructor : Kalev Kask}
+
+{\bf Homework Assignment 7}
+
+{\bf Due Tuesday, 11/22}
+
+
+
+
+\begin{enumerate}
+
+% 1.
+\item
+	\begin{enumerate}
+		\item 4
+
+		Only when both $A$ and $B$ are \textit{True}, $B \land A$ would be \textit{True}. $C$ and $D$ could be any value. So there should have $1 \times 2^2 = 4$ models.
+
+		\item 15
+
+		$\neg A \lor \neg B \lor \neg C \lor \neg D$ 
+		$= \neg(A \land B \land C \land D)$
+
+		Only when $A,B,C,D$ are all \textit{True}, the sentences is \textit{false}. So there should have $2^4-1=15$ models.
+
+		\item 0
+
+		$(A \Rightarrow B) \land A \land \neg B \land C \land D$ \\
+		$ = (\neg A \lor B) \land A \land \neg B \land C \land D$ \\
+		$ = \neg (A \land \neg B) \land (A \land \neg B) \land C \land D$
+
+		$\neg (A \land \neg B)$ and $(A \land \neg B)$ could NOT be \textit{True} at same time. So there's no models for this sentence.
+	\end{enumerate}
+
+
+% 2.
+\item
+	\begin{enumerate}
+		\item Define: \\
+		$A:$ The car is at John's house. \\
+		$B:$ The car is at Fred's house. 
+
+		\item statement 1: $A \lor B$ \\
+		statement 2: $\neg B \Rightarrow A$
+
+		\item Statement 2 is equivalent with Statement 1, so we can not determine where the car is.
+	\end{enumerate}
+
+% 3.
+\item \textit{unit resolution}: 
+$$\frac{\alpha \lor \beta, \:\neg \beta}{\alpha}$$
+
+True table: 
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$\alpha$ & $\beta$ & $\alpha \lor \beta$ & $\neg \beta$ & $(\alpha \lor \beta)\land \neg \beta$ \\ \hline
+T & T & T & F & F \\ \hline
+\underline{T} & F & T & T & \underline{T} \\ \hline
+F & T & T & F & F \\ \hline
+F & F & F & T & F \\ \hline
+\end{tabular}
+\end{table}
+
+From the True table, we can conclude that, when $(\alpha \lor \beta)\land \neg \beta$ is \textit{True}, $\alpha$ is \textit{True}. So the \textit{unit resolution} is SOUND.
+
+% 4.
+\item
+\begin{align*}
+& \neg [((P \lor \neg Q) \rightarrow R) \rightarrow (P \land Q)] \\
+= & \neg [(\neg (P \lor \neg Q) \lor R) \rightarrow (P \land Q)] \\
+= & \neg [\neg (\neg (P \lor \neg Q) \lor R) \lor (P \land Q)] \\
+= & (\neg (P \lor \neg Q) \lor R) \land \neg (P \land Q) \\
+= & ((\neg P \land Q) \lor R) \land (\neg P \lor \neg Q) \\
+= & (\neg P \lor R) \land (Q \lor R) \land (\neg P \lor \neg Q) \\
+\end{align*}
+
+
+% 5.
+\item $N$-Queen constraints: ($q_{k,l}$, $(k,l)$ means the square on $k$-th row and $l$-th column)
+
+1. Any of two Queens should not be in the same column.
+$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j}}^{N} \neg q_{i,k})]\} $$
+
+2. Any of two Queens should not be in the same row.
+$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{k,j} \land (\bigwedge_{\substack{i=1\\i \neq j}}^{N} \neg q_{k,i})]\} $$
+
+3. Any of two Queens should not be in the same diagnal line (NW to SE).
+$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j\\1\leqslant i-j+k \leqslant N}}^{N} \neg q_{i,i-j+k})]\} $$
+
+4. Any of two Queens should not be in the same diagnal line (NE to SW).
+$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j\\1\leqslant j-i+k \leqslant N}}^{N} \neg q_{i,j-i+k})]\} $$
+
+% 6.
+\item
+\begin{enumerate}
+	\item $P \land (Q \land R) \Leftrightarrow (P \land Q) \land R$ (see Table 1: 6-(a))
+
+
+	\item $P \land (Q \lor R) \Leftrightarrow (P \land Q) \lor (P \land R)$ (see Table 2: 6-(b))
+
+
+	\item $\neg(P \land Q) \Leftrightarrow \neg P \lor \neg Q$ (see Table 3: 6-(c))
+
+
+	\item $\neg(P \land Q) \Leftrightarrow \neg P \lor \neg Q$ (see Table 4: 6-(d))
+
+\end{enumerate}
+
+
+
+% 7.
+\item
+\begin{enumerate}
+	\item \textit{Smoke} $\Rightarrow$ \textit{Smoke} (see Table 5: 7-(a))
+
+	Valid.
+
+
+	% b
+	\item \textit{Smoke} $\Rightarrow$ \textit{Fire} (see Table 6: 7-(b))
+	
+	Unsatisfiable.
+
+
+	% c
+	\item (\textit{Smoke} $\Rightarrow$ \textit{Fire}) $\Rightarrow$ ($\neg$\textit{Smoke} $\Rightarrow$ $\neg$\textit{Fire}) (see Table 7: 7-(c))
+
+	Unsatisfiable.
+
+	% d
+	\item \textit{Smoke} $\lor$ \textit{Fire} $\lor$ $\neg$\textit{Fire} (see Table 8: 7-(d))
+		
+	Valid.
+
+
+	% e
+	\item ((\textit{Smoke} $\land$ \textit{Heat}) $\Rightarrow$ \textit{Fire}) $\Leftrightarrow$ ((\textit{Smoke} $\Rightarrow$ \textit{Fire}) $\lor$ (\textit{Heat} $\Rightarrow$ \textit{Fire}))
+
+	Left:\\
+	\begin{align*}
+	& (S \land H) \Rightarrow F \\
+	= & \neg (S \land H) \lor F \\
+	= & \neg S \lor \neg H \lor F
+	\end{align*}
+
+	Right:\\
+	\begin{align*}
+	& (S \Rightarrow F) \lor (H \Rightarrow F) \\
+	= & (\neg S \lor F) \lor (\neg H \lor F) \\
+	= & \neg S \lor \neg H \lor F
+	\end{align*}
+
+	Left and Right are equivalent. So it's valid.
+
+
+
+	% f
+	\item \textit{Big} $\lor$ \textit{Dumb} $\lor$ (\textit{Dumb} $\Rightarrow$ \textit{Big})
+	\begin{align*}
+	& B \lor D \lor (D \Rightarrow B) \\
+	= & B \lor D \lor (\neg D \lor B) \\
+	= & B \lor (D \lor \neg D) 
+	\end{align*}
+
+	$D \lor \neg D$ is always \textit{True}, so that $B \lor (D \lor \neg D)$ is always \textit{True} too. So it's valid. 
+
+\end{enumerate}
+
+
+
+% 8. 
+\item DPLL
+
+$P \Rightarrow Q = \neg P \lor Q$ \\
+$L \land M \Rightarrow P = \neg L \lor \neg M \lor P$ \\
+$B \land L \Rightarrow M = \neg B \lor \neg L \lor M$ \\
+$A \land P \Rightarrow L = \neg A \lor \neg P \lor L$ \\
+$A \land B \Rightarrow L = \neg A \lor \neg B \lor L$ \\
+$A$ \\
+$B$
+
+Step 1. \\
+Clauses: $(\neg P \lor Q) \land (\neg L \lor \neg M \lor P) \land (\neg B \lor \neg L \lor M) \land (\neg A \lor \neg P \lor L) \land (\neg A \lor \neg B \lor L) \land A \land B$ \\
+Find pure symbols: $Q$ \\
+Model: $Q=$ \textit{True}
+
+Step 2. \\
+Clauses: $(\neg L \lor \neg M \lor P) \land (\neg B \lor \neg L \lor M) \land (\neg A \lor \neg P \lor L) \land (\neg A \lor \neg B \lor L) \land A \land B$ \\
+Find unit symbols: $A,B$ \\
+Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}
+
+Step 3. \\
+Clauses: $(\neg L \lor \neg M \lor P) \land (\neg L \lor M) \land (\neg P \lor L) \land L$ \\
+Find pure symbols: None \\
+Find unit symbols: $L$ \\
+Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}
+
+Step 4. \\
+Clauses: $(\neg M \lor P) \land M$ \\
+Find pure symbols: $P$ \\
+Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}, $P=$ \textit{True}
+
+Step 5. \\
+Clauses: $M$ \\
+Find unit symbols: $M$ \\
+Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}, $P=$ \textit{True}, $M=$ \textit{True}
+
+Step 6. \\
+Done
+\\
+\\
+Comparison between DPLL and FC algorithm:
+
+They generate different traces based on $KB$. FC is data driven and DPLL has early termination. The complexity of DPLL would be much less than FC.
+
+
+\end{enumerate}
+
+
+\newpage
+
+	\begin{table}[!h]
+	\centering
+	\caption{6-(a)}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	$P$ & $Q$ & $R$ & $Q \land R$ & $P \land Q$ & $P \land (Q \land R)$ & $(P \land Q) \land R$\\ \hline
+	T & T & T & T & T & T & T  \\ \hline
+	T & T & F & F & T & F & F  \\ \hline
+	T & F & T & F & F & F & F  \\ \hline
+	T & F & F & F & F & F & F  \\ \hline
+	F & T & T & T & F & F & F  \\ \hline
+	F & T & F & F & F & F & F  \\ \hline
+	F & F & T & F & F & F & F  \\ \hline
+	F & F & F & F & F & F & F  \\ \hline
+	\end{tabular}
+	\end{table}
+
+	\begin{table}[!h]
+	\centering
+	\caption{6-(b)}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+	$P$ & $Q$ & $R$ & $Q \lor R$ & $P \land Q$ & $P \land R$ & $P \land (Q \lor R)$ & $(P \land Q) \lor (P \land R)$\\ \hline
+	T & T & T & T & T & T & T & T  \\ \hline
+	T & T & F & T & T & F & T & T  \\ \hline
+	T & F & T & T & F & T & T & T  \\ \hline
+	T & F & F & F & F & F & F & F  \\ \hline
+	F & T & T & T & F & F & F & F  \\ \hline
+	F & T & F & T & F & F & F & F  \\ \hline
+	F & F & T & T & F & F & F & F  \\ \hline
+	F & F & F & F & F & F & F & F  \\ \hline
+	\end{tabular}
+	\end{table}
+
+	\begin{table}[!h]
+	\centering
+	\caption{6-(c)}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg(P \land Q)$ & $\neg P \lor \neg Q$\\ \hline
+	T & T & F & F & T & F & F \\ \hline
+	T & F & F & T & F & T & T \\ \hline
+	F & T & T & F & F & T & T \\ \hline
+	F & F & T & T & F & T & T \\ \hline
+	\end{tabular}
+	\end{table}	
+
+	\begin{table}[!h]
+	\centering
+	\caption{6-(d)}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline
+	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg P \lor \neg Q$ & $P \Leftrightarrow Q$ & $(P \land Q) \lor (\neg P \lor \neg Q)$ \\ \hline
+	T & T & F & F & T & F & T & T \\ \hline
+	T & F & F & T & F & F & F & F \\ \hline
+	F & T & T & F & F & F & F & F \\ \hline
+	F & F & T & T & F & T & T & T \\ \hline
+	\end{tabular}
+	\end{table}		
+
+
+
+	\begin{table}[h]
+	\centering
+	\caption{7-(a)}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	$S$ & $\neg S$ & $S\Rightarrow S (\neg S \lor S)$  \\ \hline
+	T & F & T \\ \hline
+	F & T & T \\ \hline
+	\end{tabular}
+	\end{table}	
+	
+
+	\begin{table}[h]
+	\centering
+	\caption{7-(b)}
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	$S$ & $F$ & $\neg S$ & $S\Rightarrow F (\neg S \lor F)$  \\ \hline
+	T & T & F & T\\ \hline
+	T & F & F & F\\ \hline
+	F & T & T & T\\ \hline
+	F & F & T & T\\ \hline
+	\end{tabular}
+	\end{table}	
+	
+
+	\begin{table}[h]
+	\centering
+	\caption{7-(c)}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	$S$ & $F$ & $\neg S$ & $\neg F$ & $S\Rightarrow F$ & $\neg S \Rightarrow \neg F$ & $(S\Rightarrow F)\Rightarrow (\neg S \Rightarrow \neg F)$ \\ \hline
+	T & T & F & F & T & T & T\\ \hline
+	T & F & F & T & F & T & T\\ \hline
+	F & T & T & F & T & F & F\\ \hline
+	F & F & T & T & T & T & T\\ \hline
+	\end{tabular}
+	\end{table}	
+	
+	
+	\begin{table}[h]
+	\centering
+	\caption{7-(d)}
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	$S$ & $F$ & $\neg F$ & $S \lor F \lor \neg F$  \\ \hline
+	T & T & F & T\\ \hline
+	T & F & T & T\\ \hline
+	F & T & F & T\\ \hline
+	F & F & T & T\\ \hline
+	\end{tabular}
+	\end{table}	
+
+
+\end{document}
