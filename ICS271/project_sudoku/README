@@ -1,0 +1,15 @@
+In Linux, using 
+$ make 
+to compile the code, and you will get an executable file "sudoku"
+run it using
+$ ./sudoku
+
+Using 
+$ make clean
+to remove compiled output files.
+
+In "main.cpp", first line is the webpage link for the code.
+You can find initial sudoku matrix in "main.cpp", and modify it if you want.
+The solution of this sudoku game will show on command window after you run
+$ ./sudoku
+
