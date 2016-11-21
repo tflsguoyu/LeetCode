@@ -37,7 +37,7 @@ downsampleScale = [1,2,5,10,20,40];
 figure;
 
 subplot(2,2,1);
-plot(downsampleScale,bright,'*-');
+plot(downsampleScale,std,'*-');
 xlabel('downsampleScale');
 ylabel('std');
 
