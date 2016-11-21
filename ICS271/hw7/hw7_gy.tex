@@ -9,7 +9,8 @@
 \usepackage{amssymb}
 \usepackage{multirow}
 \usepackage{siunitx}
-
+\usepackage{lscape}
+\usepackage{rotating}
 
 \begin{document}
 {\bf ICS 271}
@@ -32,331 +33,186 @@
 \begin{enumerate}
 
 % 1.
-\item
-	\begin{enumerate}
-		\item 4
+\item PDDL operator schemata
 
-		Only when both $A$ and $B$ are \textit{True}, $B \land A$ would be \textit{True}. $C$ and $D$ could be any value. So there should have $1 \times 2^2 = 4$ models.
+	$Init(LeftShoe(SH1) \land RightShoe(SH2) \land Sock(SK1) \land Sock(SK2) \land Hat(H) \land Shirt(ST) \land Human(Me) \\
+	\textcolor{white}{aaaa} \land \neg On(SH1,Me) \land \neg On(SH2,Me) \land \neg On(SK2,Me) \land \neg On(SK2,Me) \land \neg On(H,Me) \land \neg On(ST,Me))$
 
-		\item 15
+	$Goal(On(SH1,Me) \land On(SH2,Me) \land On(SK2,Me) \land On(SK2,Me) \land On(H,Me) \land On(ST,Me))$
 
-		$\neg A \lor \neg B \lor \neg C \lor \neg D$ 
-		$= \neg(A \land B \land C \land D)$
+	$Action(PutOnShoesHat(s,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Precond}:\neg On(s,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Effect}:On(s,a))$
 
-		Only when $A,B,C,D$ are all \textit{True}, the sentences is \textit{false}. So there should have $2^4-1=15$ models.
+	$Action(PutOnLeftSocks(s,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Precond}:\neg On(s,a) \land \neg On(SH1,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Effect}:On(s,a))$
 
-		\item 0
+	$Action(PutOnRightSocks(s,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Precond}:\neg On(s,a) \land \neg On(SH2,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Effect}:On(s,a))$
 
-		$(A \Rightarrow B) \land A \land \neg B \land C \land D$ \\
-		$ = (\neg A \lor B) \land A \land \neg B \land C \land D$ \\
-		$ = \neg (A \land \neg B) \land (A \land \neg B) \land C \land D$
-
-		$\neg (A \land \neg B)$ and $(A \land \neg B)$ could NOT be \textit{True} at same time. So there's no models for this sentence.
-	\end{enumerate}
+	$Action(PutOnShirt(s,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Precond}:\neg On(s,a) \land \neg On(H,a)$, \\
+	\textcolor{white}{aaaa}$\textsc{Effect}:On(s,a))$
 
 
 % 2.
-\item
-	\begin{enumerate}
-		\item Define: \\
-		$A:$ The car is at John's house. \\
-		$B:$ The car is at Fred's house. 
+\item The PDDL representation was designed to make it easy to regress actions. If a domain can be expressed in PDDL, then we can do regression search on it. Given a ground goal description $g$ and a ground action $a$, the regression from $g$ over $a$ gives us a state description $g'$ defined by 
+$$g' = (g-\textsc{Add}(a)) \cup Precond(a)$$ 
 
-		\item statement 1: $A \lor B$ \\
-		statement 2: $\neg B \Rightarrow A$
+Regressively, we can find the solution from $Goal$ to $Init$.
 
-		\item Statement 2 is equivalent with Statement 1, so we can not determine where the car is.
-	\end{enumerate}
 
 % 3.
-\item \textit{unit resolution}: 
-$$\frac{\alpha \lor \beta, \:\neg \beta}{\alpha}$$
+\item
+\begin{enumerate}
+	\item Initial State:
+		
+		$Init(At(Monkey,A) \land At(Bananas,B) \land At(Box,C) \\
+		\textcolor{white}{aaaa} \land Height(Monkey,Low) \land Height(Box,Low) \land Height(Bananas,High))$
 
-True table: 
-\begin{table}[ht]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-$\alpha$ & $\beta$ & $\alpha \lor \beta$ & $\neg \beta$ & $(\alpha \lor \beta)\land \neg \beta$ \\ \hline
-T & T & T & F & F \\ \hline
-\underline{T} & F & T & T & \underline{T} \\ \hline
-F & T & T & F & F \\ \hline
-F & F & F & T & F \\ \hline
-\end{tabular}
-\end{table}
+	\item Actions:
 
-From the True table, we can conclude that, when $(\alpha \lor \beta)\land \neg \beta$ is \textit{True}, $\alpha$ is \textit{True}. So the \textit{unit resolution} is SOUND.
+		$Action(Go(x, y)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:At(Monkey, x)$,\\
+		\textcolor{white}{aaaa}$\textsc{Effect}:At(Monkey, y) \land \neg At(Monkey, x))$
+
+		$Action(Push(b, x, y)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:At(Monkey, x) \land At(b,x)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:At(b, y) \land At(Monkey, y) \land \neg At(b, x) \land \neg At(Monkey, x))$ 
+
+		$Action(ClimbUp(b,x)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:At(Monkey, x) \land At(b, x) \land Height(Monkey, low)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:On(Monkey, b) \land \neg Height(Monkey,Low) \land Height(Monkey,High))$
+
+		$Action(ClimbDown(b)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:On(Monkey, b) \land Height(Monkey,High)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:\neg On(Monkey, b) \land \neg Height(Monkey,High) \land Height(Monkey,Low)$
+		
+		$Action(Grasp(b)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:Height(Monkey, h) \land Height(b, h) \land At(Monkey, x) \land At(b, x)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:Have(Monkey, b))$
+				
+		$Action(UnGrasp(b)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:Have(Monkey, b)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:\neg Have(Monkey, b))$
+
+	\item Goal:
+
+		$Goal(Have(Monkey,Bananas) \land At(Box,C))$
+	
+	\item Add $Pushable$ in above solution, $Init$ and $Action(Push)$ will be change to:
+
+		$Init(At(Monkey,A) \land At(Bananas,B) \land At(Box,C) \land Height(Monkey,Low) \\
+		\textcolor{white}{aaaa} \land Height(Box,Low) \land Height(Bananas,High) \land Pushable(Box))$
+
+		$Action(Push(b, x, y)$, \\
+		\textcolor{white}{aaaa}$\textsc{Precond}:At(Monkey, x) \land At(b,x) \land Pushable(b)$, \\
+		\textcolor{white}{aaaa}$\textsc{Effect}:At(b, y) \land At(Monkey, y) \land \neg At(b, x) \land \neg At(Monkey, x))$ 
+
+\end{enumerate}
 
 % 4.
-\item
-\begin{align*}
-& \neg [((P \lor \neg Q) \rightarrow R) \rightarrow (P \land Q)] \\
-= & \neg [(\neg (P \lor \neg Q) \lor R) \rightarrow (P \land Q)] \\
-= & \neg [\neg (\neg (P \lor \neg Q) \lor R) \lor (P \land Q)] \\
-= & (\neg (P \lor \neg Q) \lor R) \land \neg (P \land Q) \\
-= & ((\neg P \land Q) \lor R) \land (\neg P \lor \neg Q) \\
-= & (\neg P \lor R) \land (Q \lor R) \land (\neg P \lor \neg Q) \\
-\end{align*}
+\item See Figure 1
 
+    \begin{sidewaysfigure}[ht]
+    \includegraphics[width=\textwidth]{figure/Slide1.PNG}
+    \caption{}
+    \end{sidewaysfigure}
 
 % 5.
-\item $N$-Queen constraints: ($q_{k,l}$, $(k,l)$ means the square on $k$-th row and $l$-th column)
+\item SATPlanning Problem (Ignore $Block(A)$,$Block(B)$,$Block(C)$)
 
-1. Any of two Queens should not be in the same column.
-$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j}}^{N} \neg q_{i,k})]\} $$
+$Init^0 = On(A,Table)^0 \land On(B,Table)^0 \land On(C,Table)^0$ \\
+\textcolor{white}{aaaa}$\land \neg On(A,B)^0 \land \neg On(A,C)^0 \land \neg On(B,A)^0 \land \neg On(B,C)^0 \land \neg On(C,A)^0 \land \neg On(C,B)^0$ \\
+\textcolor{white}{aaaa}$\land Clear(A)^0 \land Clear(B)^0 \land Clear(C)^0$
 
-2. Any of two Queens should not be in the same row.
-$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{k,j} \land (\bigwedge_{\substack{i=1\\i \neq j}}^{N} \neg q_{k,i})]\} $$
+$Goal^t = On(A,B)^t \land On(B,C)^t$
 
-3. Any of two Queens should not be in the same diagnal line (NW to SE).
-$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j\\1\leqslant i-j+k \leqslant N}}^{N} \neg q_{i,i-j+k})]\} $$
+$Move(A,Table,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,Table) \land Clear(A) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,B) \land Clear(Table) \land \neg On(A,Table) \land \neg Clear(B)$
 
-4. Any of two Queens should not be in the same diagnal line (NE to SW).
-$$ \bigwedge_{k=1}^{N}\{\bigvee_{j=1}^{N}[q_{j,k} \land (\bigwedge_{\substack{i=1\\i \neq j\\1\leqslant j-i+k \leqslant N}}^{N} \neg q_{i,j-i+k})]\} $$
+$Move(A,Table,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,Table) \land Clear(A) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,C) \land Clear(Table) \land \neg On(A,Table) \land \neg Clear(C)$
 
-% 6.
-\item
-\begin{enumerate}
-	\item $P \land (Q \land R) \Leftrightarrow (P \land Q) \land R$ (see Table 1: 6-(a))
+$Move(B,Table,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,Table) \land Clear(B) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,A) \land Clear(Table) \land \neg On(B,Table) \land \neg Clear(A)$
 
+$Move(B,Table,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,Table) \land Clear(B) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,C) \land Clear(Table) \land \neg On(B,Table) \land \neg Clear(C)$
 
-	\item $P \land (Q \lor R) \Leftrightarrow (P \land Q) \lor (P \land R)$ (see Table 2: 6-(b))
+$Move(C,Table,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,Table) \land Clear(C) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,A) \land Clear(Table) \land \neg On(C,Table) \land \neg Clear(A)$
 
+$Move(C,Table,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,Table) \land Clear(C) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,B) \land Clear(Table) \land \neg On(C,Table) \land \neg Clear(B)$
 
-	\item $\neg(P \land Q) \Leftrightarrow \neg P \lor \neg Q$ (see Table 3: 6-(c))
+$Move(A,B,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,B) \land Clear(A) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,C) \land Clear(B) \land \neg On(A,B) \land \neg Clear(C)$
 
+$Move(A,C,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,C) \land Clear(A) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,B) \land Clear(C) \land \neg On(A,C) \land \neg Clear(B)$
 
-	\item $\neg(P \land Q) \Leftrightarrow \neg P \lor \neg Q$ (see Table 4: 6-(d))
+$Move(B,A,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,A) \land Clear(B) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,C) \land Clear(A) \land \neg On(B,A) \land \neg Clear(C)$
 
-\end{enumerate}
+$Move(B,C,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,C) \land Clear(B) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,A) \land Clear(C) \land \neg On(B,C) \land \neg Clear(A)$
 
+$Move(C,A,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,A) \land Clear(C) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,B) \land Clear(A) \land \neg On(C,A) \land \neg Clear(B)$
 
+$Move(C,B,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,B) \land Clear(C) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,A) \land Clear(B) \land \neg On(C,B) \land \neg Clear(A)$
 
-% 7.
-\item
-\begin{enumerate}
-	\item \textit{Smoke} $\Rightarrow$ \textit{Smoke} (see Table 5: 7-(a))
+$MoveToTable(A,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,B) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,Table) \land Clear(B) \land \neg On(A,B)$
 
-	Valid.
+$MoveToTable(A,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(A,C) \land Clear(A)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(A,Table) \land Clear(C) \land \neg On(A,C)$
 
+$MoveToTable(B,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,A) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,Table) \land Clear(A) \land \neg On(B,A)$
 
-	% b
-	\item \textit{Smoke} $\Rightarrow$ \textit{Fire} (see Table 6: 7-(b))
-	
-	Unsatisfiable.
+$MoveToTable(B,C):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(B,C) \land Clear(B)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(B,Table) \land Clear(C) \land \neg On(B,C)$
 
+$MoveToTable(C,A):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,A) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,Table) \land Clear(A) \land \neg On(C,A)$
 
-	% c
-	\item (\textit{Smoke} $\Rightarrow$ \textit{Fire}) $\Rightarrow$ ($\neg$\textit{Smoke} $\Rightarrow$ $\neg$\textit{Fire}) (see Table 7: 7-(c))
+$MoveToTable(C,B):$ \\
+\textcolor{white}{aaaa}$\textsc{Precond}:On(C,B) \land Clear(C)$ \\
+\textcolor{white}{aaaa}$\textsc{Effect}:On(C,Table) \land Clear(B) \land \neg On(C,B)$
 
-	Unsatisfiable.
+Successor state axioms: \\
+\textcolor{white}{aaaa}$F^{t+1} \Leftrightarrow ActionCausesF^t \lor (F^t \land \neg ActionCausesNotF^t)$
 
-	% d
-	\item \textit{Smoke} $\lor$ \textit{Fire} $\lor$ $\neg$\textit{Fire} (see Table 8: 7-(d))
-		
-	Valid.
+Precondition axioms: \\
+$$Move^0(A,Table,B) \Rightarrow (On(A,Table)^0 \land Clear(A)^0 \land Clear(B)^0)$$ 
+$$\dots$$
 
-
-	% e
-	\item ((\textit{Smoke} $\land$ \textit{Heat}) $\Rightarrow$ \textit{Fire}) $\Leftrightarrow$ ((\textit{Smoke} $\Rightarrow$ \textit{Fire}) $\lor$ (\textit{Heat} $\Rightarrow$ \textit{Fire}))
-
-	Left:\\
-	\begin{align*}
-	& (S \land H) \Rightarrow F \\
-	= & \neg (S \land H) \lor F \\
-	= & \neg S \lor \neg H \lor F
-	\end{align*}
-
-	Right:\\
-	\begin{align*}
-	& (S \Rightarrow F) \lor (H \Rightarrow F) \\
-	= & (\neg S \lor F) \lor (\neg H \lor F) \\
-	= & \neg S \lor \neg H \lor F
-	\end{align*}
-
-	Left and Right are equivalent. So it's valid.
-
-
-
-	% f
-	\item \textit{Big} $\lor$ \textit{Dumb} $\lor$ (\textit{Dumb} $\Rightarrow$ \textit{Big})
-	\begin{align*}
-	& B \lor D \lor (D \Rightarrow B) \\
-	= & B \lor D \lor (\neg D \lor B) \\
-	= & B \lor (D \lor \neg D) 
-	\end{align*}
-
-	$D \lor \neg D$ is always \textit{True}, so that $B \lor (D \lor \neg D)$ is always \textit{True} too. So it's valid. 
-
-\end{enumerate}
-
-
-
-% 8. 
-\item DPLL
-
-$P \Rightarrow Q = \neg P \lor Q$ \\
-$L \land M \Rightarrow P = \neg L \lor \neg M \lor P$ \\
-$B \land L \Rightarrow M = \neg B \lor \neg L \lor M$ \\
-$A \land P \Rightarrow L = \neg A \lor \neg P \lor L$ \\
-$A \land B \Rightarrow L = \neg A \lor \neg B \lor L$ \\
-$A$ \\
-$B$
-
-Step 1. \\
-Clauses: $(\neg P \lor Q) \land (\neg L \lor \neg M \lor P) \land (\neg B \lor \neg L \lor M) \land (\neg A \lor \neg P \lor L) \land (\neg A \lor \neg B \lor L) \land A \land B$ \\
-Find pure symbols: $Q$ \\
-Model: $Q=$ \textit{True}
-
-Step 2. \\
-Clauses: $(\neg L \lor \neg M \lor P) \land (\neg B \lor \neg L \lor M) \land (\neg A \lor \neg P \lor L) \land (\neg A \lor \neg B \lor L) \land A \land B$ \\
-Find unit symbols: $A,B$ \\
-Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}
-
-Step 3. \\
-Clauses: $(\neg L \lor \neg M \lor P) \land (\neg L \lor M) \land (\neg P \lor L) \land L$ \\
-Find pure symbols: None \\
-Find unit symbols: $L$ \\
-Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}
-
-Step 4. \\
-Clauses: $(\neg M \lor P) \land M$ \\
-Find pure symbols: $P$ \\
-Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}, $P=$ \textit{True}
-
-Step 5. \\
-Clauses: $M$ \\
-Find unit symbols: $M$ \\
-Model: $Q=$ \textit{True}, $A=$ \textit{True}, $B=$ \textit{True}, $L=$ \textit{True}, $P=$ \textit{True}, $M=$ \textit{True}
-
-Step 6. \\
-Done
-\\
-\\
-Comparison between DPLL and FC algorithm:
-
-They generate different traces based on $KB$. FC is data driven and DPLL has early termination. The complexity of DPLL would be much less than FC.
-
+Action exclusion axioms: ($Action_i$ is one of the $Action$s above)\\
+$$\bigwedge_{i\neq j} (\neg Action_i^0 \lor \neg Action_j^0)$$ 
+$$\dots$$
 
 \end{enumerate}
-
-
-\newpage
-
-	\begin{table}[!h]
-	\centering
-	\caption{6-(a)}
-	\begin{tabular}{|c|c|c|c|c|c|c|}
-	\hline
-	$P$ & $Q$ & $R$ & $Q \land R$ & $P \land Q$ & $P \land (Q \land R)$ & $(P \land Q) \land R$\\ \hline
-	T & T & T & T & T & T & T  \\ \hline
-	T & T & F & F & T & F & F  \\ \hline
-	T & F & T & F & F & F & F  \\ \hline
-	T & F & F & F & F & F & F  \\ \hline
-	F & T & T & T & F & F & F  \\ \hline
-	F & T & F & F & F & F & F  \\ \hline
-	F & F & T & F & F & F & F  \\ \hline
-	F & F & F & F & F & F & F  \\ \hline
-	\end{tabular}
-	\end{table}
-
-	\begin{table}[!h]
-	\centering
-	\caption{6-(b)}
-	\begin{tabular}{|c|c|c|c|c|c|c|c|}
-	\hline
-	$P$ & $Q$ & $R$ & $Q \lor R$ & $P \land Q$ & $P \land R$ & $P \land (Q \lor R)$ & $(P \land Q) \lor (P \land R)$\\ \hline
-	T & T & T & T & T & T & T & T  \\ \hline
-	T & T & F & T & T & F & T & T  \\ \hline
-	T & F & T & T & F & T & T & T  \\ \hline
-	T & F & F & F & F & F & F & F  \\ \hline
-	F & T & T & T & F & F & F & F  \\ \hline
-	F & T & F & T & F & F & F & F  \\ \hline
-	F & F & T & T & F & F & F & F  \\ \hline
-	F & F & F & F & F & F & F & F  \\ \hline
-	\end{tabular}
-	\end{table}
-
-	\begin{table}[!h]
-	\centering
-	\caption{6-(c)}
-	\begin{tabular}{|c|c|c|c|c|c|c|}
-	\hline
-	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg(P \land Q)$ & $\neg P \lor \neg Q$\\ \hline
-	T & T & F & F & T & F & F \\ \hline
-	T & F & F & T & F & T & T \\ \hline
-	F & T & T & F & F & T & T \\ \hline
-	F & F & T & T & F & T & T \\ \hline
-	\end{tabular}
-	\end{table}	
-
-	\begin{table}[!h]
-	\centering
-	\caption{6-(d)}
-	\begin{tabular}{|c|c|c|c|c|c|c|c|}
-	\hline
-	$P$ & $Q$ & $\neg P$ & $\neg Q$ & $P \land Q$ & $\neg P \lor \neg Q$ & $P \Leftrightarrow Q$ & $(P \land Q) \lor (\neg P \lor \neg Q)$ \\ \hline
-	T & T & F & F & T & F & T & T \\ \hline
-	T & F & F & T & F & F & F & F \\ \hline
-	F & T & T & F & F & F & F & F \\ \hline
-	F & F & T & T & F & T & T & T \\ \hline
-	\end{tabular}
-	\end{table}		
-
-
-
-	\begin{table}[h]
-	\centering
-	\caption{7-(a)}
-	\begin{tabular}{|c|c|c|}
-	\hline
-	$S$ & $\neg S$ & $S\Rightarrow S (\neg S \lor S)$  \\ \hline
-	T & F & T \\ \hline
-	F & T & T \\ \hline
-	\end{tabular}
-	\end{table}	
-	
-
-	\begin{table}[h]
-	\centering
-	\caption{7-(b)}
-	\begin{tabular}{|c|c|c|c|}
-	\hline
-	$S$ & $F$ & $\neg S$ & $S\Rightarrow F (\neg S \lor F)$  \\ \hline
-	T & T & F & T\\ \hline
-	T & F & F & F\\ \hline
-	F & T & T & T\\ \hline
-	F & F & T & T\\ \hline
-	\end{tabular}
-	\end{table}	
-	
-
-	\begin{table}[h]
-	\centering
-	\caption{7-(c)}
-	\begin{tabular}{|c|c|c|c|c|c|c|}
-	\hline
-	$S$ & $F$ & $\neg S$ & $\neg F$ & $S\Rightarrow F$ & $\neg S \Rightarrow \neg F$ & $(S\Rightarrow F)\Rightarrow (\neg S \Rightarrow \neg F)$ \\ \hline
-	T & T & F & F & T & T & T\\ \hline
-	T & F & F & T & F & T & T\\ \hline
-	F & T & T & F & T & F & F\\ \hline
-	F & F & T & T & T & T & T\\ \hline
-	\end{tabular}
-	\end{table}	
-	
-	
-	\begin{table}[h]
-	\centering
-	\caption{7-(d)}
-	\begin{tabular}{|c|c|c|c|}
-	\hline
-	$S$ & $F$ & $\neg F$ & $S \lor F \lor \neg F$  \\ \hline
-	T & T & F & T\\ \hline
-	T & F & T & T\\ \hline
-	F & T & F & T\\ \hline
-	F & F & T & T\\ \hline
-	\end{tabular}
-	\end{table}	
-
 
 \end{document}
