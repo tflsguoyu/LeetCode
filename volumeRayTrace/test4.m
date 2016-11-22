@@ -79,7 +79,7 @@ function test
         w = zeros(maxDepth, 2);
         y = [];
 
-        for samples = 1: 50000
+        for samples = 1: 20000
             
             x(1,:) = [rand,1];
             w(1,:) = [0,1];
