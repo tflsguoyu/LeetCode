@@ -9,23 +9,23 @@ function test
     %%
     sigmaT_resolution = 320;
     %%
-%     sigmaT = peaks(sigmaT_resolution)+peaks(sigmaT_resolution)';
-%     sigmaT(sigmaT<0) = -sigmaT(sigmaT<0);
-%     sigmaT = sigmaT * 0.5;
-%     sigmaT(sigmaT<0.5) = 4-sigmaT(sigmaT<0.5);    
+    sigmaT = peaks(sigmaT_resolution)+peaks(sigmaT_resolution)';
+    sigmaT(sigmaT<0) = -sigmaT(sigmaT<0);
+    sigmaT = sigmaT * 0.5;
+    sigmaT(sigmaT<0.5) = 4-sigmaT(sigmaT<0.5);    
     %%
 %     sigmaT = rand(sigmaT_resolution,sigmaT_resolution)*6;
 
     %%
-    sigmaT = zeros(sigmaT_resolution,sigmaT_resolution);
-    ii = 6;
-    for i = 1:sigmaT_resolution
-       if(ii<0)
-        ii = 6;
-       end
-        sigmaT(i,:) = ii;
-        ii = ii-0.5;       
-    end
+%     sigmaT = zeros(sigmaT_resolution,sigmaT_resolution);
+%     ii = 6;
+%     for i = 1:sigmaT_resolution
+%        if(ii<0)
+%         ii = 6;
+%        end
+%         sigmaT(i,:) = ii;
+%         ii = ii-0.5;       
+%     end
 %     sigmaT = imrotate(sigmaT,90);
 
     %%
@@ -78,14 +78,20 @@ function test
         x = zeros(maxDepth, 2);
         w = zeros(maxDepth, 2);
         y = [];
+        weight = zeros(maxDepth,1);
 
-        for samples = 1: 20000
+        N_Sample = 20000;
+        for samples = 1: N_Sample
             
             x(1,:) = [rand,1];
             w(1,:) = [0,1];
             w(2:end,:) = [];
             x(2:end,:) = [];
-
+            
+            albedo = 0.95;
+            weight(1,1) = 1/N_Sample * albedo;
+            weight(2:end,:) = [];
+            
             for dep = 1 : maxDepth - 1
                 c = round((1-x(dep,2))*size(sigmaT_d,1));
                 r = round(x(dep,1)*size(sigmaT_d,2));
@@ -93,12 +99,13 @@ function test
                 t = -log(rand)/sigmaT_d(c,r);
                 x1 = x(dep, :) - t*w(dep, :);
                 if x1(1) < 0.0 || x1(1) > 1.0 || x1(2) < 0.0 || x1(2) > 1.0
-                    y = [y; x(1:dep-1, :)];
+                    y = [y; [x(1:dep-1,:) weight(1:dep-1,1)]];
                     break;
                 end
                 theta = 2*pi*rand;
                 w(dep + 1,:) = [cos(theta),sin(theta)];
                 x(dep + 1,:) = x1;
+                weight(dep + 1,1) = weight(dep,1)*albedo;
             end
 %             y = [y; x(end,:)];
         end
@@ -110,7 +117,7 @@ function test
             c = round((1-y(i,2))*mapSize);
             r = round(y(i,1)*mapSize);
             c(c==0)=1;r(r==0)=1;
-            densityMap(c, r) = densityMap(c, r) + 1;
+            densityMap(c, r) = densityMap(c, r) + y(i,3);
         end
 
 %         densityMap = conv2(densityMap, ones(10,10));
@@ -125,7 +132,7 @@ function test
         densityMap = log(densityMap+1);
         densityMean(flag) = mean(densityMap(:));
         subplot(3,6,flag+12)
-        imagesc(densityMap,[0 6])
+        imagesc(densityMap)
         colorbar
         axis equal
         axis off      
