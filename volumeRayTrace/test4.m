@@ -117,7 +117,7 @@ function test
             c = round((1-y(i,2))*mapSize);
             r = round(y(i,1)*mapSize);
             c(c==0)=1;r(r==0)=1;
-            densityMap(c, r) = densityMap(c, r) + y(i,3);
+            densityMap(c, r) = densityMap(c, r) + y(i,3)/sigmaT_d(c,r);
         end
 
 %         densityMap = conv2(densityMap, ones(10,10));

@@ -1,13 +1,16 @@
 //http://www.geeksforgeeks.org/backtracking-set-7-suduku/
 
 // A Backtracking program  in C++ to solve Sudoku problem
-#include <stdio.h>
- 
+#include <iostream>
+#include <ctime>
+using namespace std; 
 // UNASSIGNED is used for empty cells in sudoku grid
 #define UNASSIGNED 0
  
 // N is used for size of Sudoku grid. Size will be NxN
 #define N 9
+
+#define rep(i, a, b)  for(int i = a; i <= b; i++)
  
 // This function finds an entry in grid that is still unassigned
 bool FindUnassignedLocation(int grid[N][N], int &row, int &col);
@@ -106,9 +109,11 @@ void printGrid(int grid[N][N])
 {
     for (int row = 0; row < N; row++)
     {
-       for (int col = 0; col < N; col++)
-             printf("%2d", grid[row][col]);
-        printf("\n");
+        for (int col = 0; col < N; col++)
+            cout << grid[row][col] << " ";
+             // printf("%2d", grid[row][col]);
+        // printf("\n");
+        cout << endl;
     }
 }
  
@@ -116,19 +121,50 @@ void printGrid(int grid[N][N])
 int main()
 {
     // 0 means unassigned cells
-    int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};
-    if (SolveSudoku(grid) == true)
-          printGrid(grid);
-    else
-         printf("No solution exists");
- 
+    // int grid[N][N] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+    //                   {5, 2, 0, 0, 0, 0, 0, 0, 0},
+    //                   {0, 8, 7, 0, 0, 0, 0, 3, 1},
+    //                   {0, 0, 3, 0, 1, 0, 0, 8, 0},
+    //                   {9, 0, 0, 8, 6, 3, 0, 0, 5},
+    //                   {0, 5, 0, 0, 9, 0, 6, 0, 0},
+    //                   {1, 3, 0, 0, 0, 0, 2, 5, 0},
+    //                   {0, 0, 0, 0, 0, 0, 0, 7, 4},
+    //                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};
+  int grid[9][9];
+  int T;
+
+  cin >> T;
+  while(T--){
+    // rep(i,1,9)
+    //  rep(j,1,9)
+    //    cin >> mp[i][j];
+    string st;
+    rep(i,0,8){     
+      cin >> st;
+      // cout <<st << endl;
+      rep(j,0,8)
+        grid[i][j] = st[j] == '?'?0:st[j] - '0';
+    }
+    // cout << st << endl;
+    cin >> st;
+    // cout <<"!"<< st << endl;
+
+
+   
+    clock_t start;
+    double duration;
+    start = clock();   
+
+    SolveSudoku(grid);
+
+    duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+
+    printGrid(grid);
+    
+    cout<< "Time: " << duration*1000 << "ms" << endl;
+
+  }
+
+
     return 0;
 }

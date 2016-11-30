@@ -3,6 +3,7 @@
 //This program solves the sudoku puzzle.
 #include <iostream>
 #include <cmath>
+#include <ctime>
 using namespace std;
 void loadinput();
 void printgrid();
@@ -138,9 +139,18 @@ int main(){
 
 	loadinput();
 	
+clock_t start;
+double duration;
+start = clock();
+
 	solve(0, 0);
 	
+duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+
+
 	printgrid();
+
+cout<<"Time: "<<duration<<endl;
 	
 	return 0;
 }
