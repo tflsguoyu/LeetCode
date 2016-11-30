@@ -10,6 +10,8 @@
 #include <limits.h>
 #include <algorithm>
 #include <sstream>
+#include <fstream>
+#include <iomanip>
 #include <ctime>
 #define X first 
 #define Y second 
@@ -213,6 +215,10 @@ struct Sudoku{
 }sudoku;
 int mp[9][9];
 int main(){
+
+	ofstream myfile;
+	myfile.open("time.txt");
+
 	cin >> T;
 	while(T--){
 		// rep(i,1,9)
@@ -248,10 +254,12 @@ int main(){
 				cout << endl;
 			}
 	cout<< "Time: " << duration*1000 << "ms" << endl;
+	myfile << fixed << setprecision(8) << duration*1000 << endl;
+
 
 		// }
 		// if(T) puts("---");
 	}
-	
-	
+	myfile.close();
+	return 0;
 }

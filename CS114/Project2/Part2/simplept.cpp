@@ -357,7 +357,7 @@ int main(int argc, char *argv[]) {
     omp_set_num_threads(nworkers);
     rng.init(nworkers);
 
-    int w = 1920, h = 1080, samps = argc==2 ? atoi(argv[1])/4 : 1; // # samples
+    int w = 640, h = 480, samps = argc==2 ? atoi(argv[1])/4 : 1; // # samples
     Vec cx = Vec(w*.5135/h), cy = (cx.cross(cam.d)).normalize()*.5135;    
     std::vector<Vec> c(w*h);
 

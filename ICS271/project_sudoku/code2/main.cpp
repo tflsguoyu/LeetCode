@@ -2,6 +2,8 @@
 
 // A Backtracking program  in C++ to solve Sudoku problem
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 #include <ctime>
 using namespace std; 
 // UNASSIGNED is used for empty cells in sudoku grid
@@ -117,6 +119,8 @@ void printGrid(int grid[N][N])
     }
 }
  
+int grid[9][9];
+int T; 
 /* Driver Program to test above functions */
 int main()
 {
@@ -130,8 +134,9 @@ int main()
     //                   {1, 3, 0, 0, 0, 0, 2, 5, 0},
     //                   {0, 0, 0, 0, 0, 0, 0, 7, 4},
     //                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};
-  int grid[9][9];
-  int T;
+
+  ofstream myfile;
+  myfile.open("time.txt");
 
   cin >> T;
   while(T--){
@@ -162,9 +167,11 @@ int main()
     printGrid(grid);
     
     cout<< "Time: " << duration*1000 << "ms" << endl;
+    myfile << fixed << setprecision(8) << duration*1000 << endl;
 
   }
 
+  myfile.close();
 
-    return 0;
+  return 0;
 }

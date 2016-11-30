@@ -21,11 +21,15 @@
 #include <cstring>  
 #include <cmath>  
 #include <ctime>  
+#include <fstream>
 #define MAXN 9*9*9*9  
 #define INF 1000000000  
 #define N 9  
 #define M 9*9*9+5  
-using namespace std;  
+#define rep(i, a, b)  for(int i = a; i <= b; i++)
+using namespace std; 
+char mpm[9][9];
+int T; 
 int L[MAXN], R[MAXN], C[MAXN], S[M], U[MAXN], D[MAXN], H[M], O[M], X[MAXN];  
 int cnt, head;  
 char mp[N * N + 5], ans[N * N + 5];  
@@ -82,7 +86,7 @@ void readdata()
     int r, cx, cy, ck, cg;  
     for(int i = 0; i < N; i++)  
         for(int j = 0; j < N; j++)  
-            if(mp[i * N + j] != '.')  
+            if(mp[i * N + j] != '?')  
             {  
                 cal(r, cx, cy, ck, cg, i, j, mp[i * N + j] - '0');  
                 link(r, cx);  
@@ -93,7 +97,7 @@ void readdata()
             }  
     for(int i = 0; i < N; i++)  
         for(int j = 0; j < N; j++)  
-            if(mp[i * N + j] == '.')  
+            if(mp[i * N + j] == '?')  
             for(int k = 1; k <= N; k++)  
             {  
                 cal(r, cx, cy, ck, cg, i, j, k);  
@@ -163,11 +167,50 @@ bool dfs(int k)
 }  
 int main()  
 {  
-    while(scanf("%s", mp) != EOF && mp[0] != 'e')  
-    {  
+    ofstream myfile;
+    myfile.open("time.txt");
+
+    cin >> T;
+    while(T--){
+        // rep(i,1,9)
+        //  rep(j,1,9)
+        //      cin >> mp[i][j];
+        string st;
+        rep(i,0,8){         
+            cin >> st;
+            // cout <<st << endl;
+            rep(j,0,8)
+                mpm[i][j] = st[j];
+        }
+        // cout << st << endl;
+        cin >> st;
+        // cout <<"!"<< st << endl;
+        // printf("GY\n");
+        int i,j,k;
+        for(i=0;i<9;i++)
+            for(j=0;j<9;j++)
+            {
+                k = 9*i+j;
+                // cout << mpm[i][j];
+                mp[k]=mpm[i][j];
+                // cout << mp[k];
+            }
+        // printf("GY1\n");
+        
+        clock_t start;
+        double duration;
+        start = clock();  
+        
         init();  
         readdata();  
         dfs(0);  
+
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        cout<< "Time: " << duration*1000 << "ms" << endl;
+        myfile << fixed << setprecision(8) << duration*1000 << endl;
+
     }  
+
+    myfile.close();
     return 0;  
 }  
